@@ -245,11 +245,21 @@ const taglines = [
     "Your central hub for accelerated learning. Let's get started."
 ];
 
+const SESSION_MOOD_CHECKIN_KEY = 'nexusMoodCheckedInSession'; // Key for sessionStorage
+
 const StudyHub: React.FC = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [mostUsedToolKey, setMostUsedToolKey] = useState<string | null>(null);
-  const [showMoodCheckin, setShowMoodCheckin] = useState(true);
+  const [showMoodCheckin, setShowMoodCheckin] = useState(() => {
+      try {
+          // Check if the flag exists in sessionStorage
+          return !sessionStorage.getItem(SESSION_MOOD_CHECKIN_KEY);
+      } catch (error) {
+          console.error("Error accessing sessionStorage:", error);
+          return true; // Default to showing if sessionStorage is unavailable
+      }
+  });
   const [aiSuggestion, setAiSuggestion] = useState<string | null>(null); // New state for AI suggestion
   const [isLoadingSuggestion, setIsLoadingSuggestion] = useState(false); // New state for loading
 
@@ -260,14 +270,15 @@ const StudyHub: React.FC = () => {
     };
     fetchMostUsedTool();
 
-    if (sessionStorage.getItem('moodCheckedIn')) {
-        setShowMoodCheckin(false);
-    }
   }, []);
 
   const handleMoodSelected = async (mood: MoodType['mood']) => { // Modified to accept mood
       setShowMoodCheckin(false);
-      sessionStorage.setItem('moodCheckedIn', 'true'); // Mark as checked in for this session
+      try {
+          sessionStorage.setItem(SESSION_MOOD_CHECKIN_KEY, 'true'); // Mark as checked in for this session
+      } catch (error) {
+          console.error("Error setting sessionStorage:", error);
+      }
       setIsLoadingSuggestion(true);
       setAiSuggestion(null); // Clear old suggestion
       
