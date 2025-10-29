@@ -199,7 +199,7 @@ const MyCourses: React.FC = () => {
 const tools = [
   { key: 'tutor', name: 'AI Tutor', href: '/tutor', description: 'Practice concepts with your AI tutor.', icon: MessageSquare, color: 'text-sky-400', bgColor: 'bg-sky-900/50' },
   { key: 'summaries', name: 'Summaries Generator', href: '/notes', description: 'Generate summaries from your notes.', icon: FileText, color: 'text-emerald-400', bgColor: 'bg-emerald-900/50' },
-  { key: 'quizzes', name: 'Quizzes & Practice', href: '/insights', description: 'Test your knowledge with practice quizzes.', icon: Brain, color: 'text-rose-400', bgColor: 'bg-rose-900/50' },
+  { key: 'quizzes', name: 'Quizzes & Practice', href: '/tutor', description: 'Test your knowledge with practice quizzes.', icon: Brain, color: 'text-rose-400', bgColor: 'bg-rose-900/50' },
 ];
 
 interface ToolCardProps {
